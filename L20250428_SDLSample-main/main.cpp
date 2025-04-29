@@ -16,10 +16,22 @@ int main()
 	int NumKeys = 0;
 	const bool* KeyStates = SDL_GetKeyboardState(&NumKeys);
 
-	int PlayerX = 0;
-	int PlayerY = 0;
+	float PlayerX = 100.0f;
+	float PlayerY = 100.0f;
+
+	Uint64 CurrentTime = SDL_GetTicks();
+	Uint64 LastTime = SDL_GetTicks();
+	Uint64 DeltaSeconds = 0;
+
 	while (IsRunning)
 	{
+		// 한 프레임 당 발생하는 차이 구하는 식 (현재 단위: milliSecond)
+		CurrentTime = SDL_GetTicks();
+
+		DeltaSeconds = (float) (CurrentTime - LastTime) / 1000.f;
+
+		LastTime = CurrentTime;
+
 		SDL_PollEvent(&MyEvent);
 		switch (MyEvent.type)
 		{
@@ -29,19 +41,19 @@ int main()
 		case SDL_EVENT_KEY_DOWN:
 			if (KeyStates[SDL_SCANCODE_UP])
 			{
-				PlayerY -= 10;
+				PlayerY -= 100.f * DeltaSeconds;
 			}
 			if (KeyStates[SDL_SCANCODE_DOWN])
 			{
-				PlayerY += 10;
+				PlayerY += 100.f * DeltaSeconds;
 			}
 			if (KeyStates[SDL_SCANCODE_LEFT])
 			{
-				PlayerX -= 10;
+				PlayerX -= 100.f * DeltaSeconds;
 			}
 			if (KeyStates[SDL_SCANCODE_RIGHT])
 			{
-				PlayerX += 10;
+				PlayerX += 100.f * DeltaSeconds;
 			}
 			if (KeyStates[SDL_SCANCODE_ESCAPE])
 			{
@@ -58,7 +70,7 @@ int main()
 		SDL_SetRenderDrawColor(MyRenderer, 255, 255, 255, 0);
 		SDL_RenderFillRect(MyRenderer, &Player);
 
-		//for (int i = 0; i < 1000; ++i)
+		//for (int i = 0; i < 10000; ++i)
 		//{
 		//	SDL_SetRenderDrawColor(MyRenderer,
 		//		SDL_rand(255),
