@@ -76,8 +76,9 @@ int main()
 		DrawCircle(MyRenderer, 320, 240, 100);
 		SDL_RenderPresent(MyRenderer);
 
-
-		// Renderer 의 ''stack에 쌓여 있는 Rect들을 한번에 배출함
+		//CPU가 RAM에 보낼 값들. 앞으로 GPU가 출력할때 필요한 정보값들을 stack형식마냥 쌓아두고
+		// SDL_RenderFillRects(MyRenderer, ...);
+		// RAM의 stack 에 쌓여 있는 Rect들을 한번에 GPU로 보내 출력함
 		SDL_RenderPresent(MyRenderer);
 	}
 
